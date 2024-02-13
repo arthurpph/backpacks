@@ -1,8 +1,11 @@
 package com.dev.shau.inventory;
 
+import com.dev.shau.Backpacks;
 import com.dev.shau.enums.MochilaType;
 import com.dev.shau.utils.Utils;
 import com.hakan.core.ui.inventory.InventoryGui;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -19,7 +22,7 @@ public class ConfirmInventory extends InventoryGui {
     private final MochilaType mochila;
 
     public ConfirmInventory(MochilaType mochila) {
-        super("confirm", "Confirmar compra", 0, InventoryType.HOPPER, new HashSet<>());
+        super("confirm", "Confirmar compra", 3, InventoryType.CHEST, new HashSet<>());
 
         super.addOption(Option.CLOSABLE);
         super.addOption(Option.CANCEL_DOWN_CLICK);
@@ -30,9 +33,10 @@ public class ConfirmInventory extends InventoryGui {
 
     @Override
     public void onOpen(@Nonnull Player player) {
-        super.setItem(1, Utils.createNamedItem(
-                Material.RED_WOOL,
-                "&4NEGAR",
+        super.setItem(15, Utils.createNamedItem(
+                Material.PAPER,
+                10093,
+                "&4&lNEGAR",
                 new ItemFlag[]{},
                 ""),
                 event -> {
@@ -40,13 +44,23 @@ public class ConfirmInventory extends InventoryGui {
                 }
         );
 
-        super.setItem(3, Utils.createNamedItem(
-                Material.EMERALD_BLOCK,
-                "&aCONFIRMAR",
+        super.setItem(11, Utils.createNamedItem(
+                Material.PAPER,
+                10094,
+                "&a&lCONFIRMAR",
                 new ItemFlag[]{},
                 ""),
                 event -> {
+                    Economy economy = Backpacks.getInstance().getEconomy();
+
                     super.close(player);
+
+                    if(economy.getBalance(player) < this.mochila.getPrice()) {
+                        player.sendMessage(Utils.alternativeColors("&cVocê não tem dinheiro suficiente para comprar isso!"));
+                        return;
+                    }
+
+                    economy.withdrawPlayer(player, this.mochila.getPrice());
                     player.getInventory().addItem(this.mochila.getItem());
                 }
         );

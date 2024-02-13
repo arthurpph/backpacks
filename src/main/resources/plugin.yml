@@ -2,6 +2,8 @@ name: backpacks
 version: '${version}'
 main: com.dev.shau.Backpacks
 api-version: '1.19'
+depend:
+  - Vault
 commands:
   mochilas:
     description: "Mostra as mochilas disponíveis para venda"

@@ -30,6 +30,10 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = 'minecraft-repo'
+        url = 'https://libraries.minecraft.net/'
+    }
     maven { url 'https://jitpack.io' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url "https://s01.oss.sonatype.org/content/groups/public/" }
@@ -43,7 +47,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     implementation 'com.github.hakan-krgn.hCore:hCore-bukkit:0.7.2.0'
-    annotationProcessor 'com.github.hakan-krgn.hCore:hCore-bukkit:0.7.2.0'
+
+    compileOnly group: 'com.mojang', name: 'authlib', version: '3.16.29'
+
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
 }
 
 

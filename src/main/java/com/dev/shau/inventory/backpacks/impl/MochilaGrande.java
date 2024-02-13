@@ -1,10 +1,9 @@
 package com.dev.shau.inventory.backpacks.impl;
 
+import com.dev.shau.enums.MochilaType;
 import com.dev.shau.inventory.backpacks.Mochila;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashSet;
 
 /**
  * @author Shau
@@ -12,6 +11,6 @@ import java.util.HashSet;
 
 public class MochilaGrande extends Mochila {
     public MochilaGrande(ItemStack itemStack) {
-        super(itemStack, "mochila_grande", "Mochila Grande", 4, InventoryType.CHEST);
+        super(MochilaType.GRANDE, itemStack, "mochila_grande", "Mochila Grande", 4, InventoryType.CHEST);
     }
 }

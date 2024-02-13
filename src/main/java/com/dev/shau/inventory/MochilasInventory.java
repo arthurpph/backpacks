@@ -27,7 +27,7 @@ public class MochilasInventory extends InventoryGui {
     public void onOpen(@Nonnull Player player) {
         super.setItem(11, Utils.createNamedPlayerHead(
                     MochilaType.PEQUENA.getItem().getType(),
-                    MochilaType.PEQUENA.getID(),
+                    MochilaType.PEQUENA.getBase64Texture(),
                     MochilaType.PEQUENA.getDisplayName(),
                     new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                     Utils.alternativeColors("&7Uma mochila pequena, pode ser um pouco útil"),
@@ -46,7 +46,7 @@ public class MochilasInventory extends InventoryGui {
 
         super.setItem(21, Utils.createNamedPlayerHead(
                     MochilaType.MEDIA.getItem().getType(),
-                    MochilaType.MEDIA.getID(),
+                    MochilaType.MEDIA.getBase64Texture(),
                     MochilaType.MEDIA.getDisplayName(),
                     new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                     Utils.alternativeColors("&7Uma mochila média, pode ser um pouco útil"),
@@ -66,7 +66,7 @@ public class MochilasInventory extends InventoryGui {
 
         super.setItem(13, Utils.createNamedPlayerHead(
                 MochilaType.GRANDE.getItem().getType(),
-                MochilaType.GRANDE.getID(),
+                MochilaType.GRANDE.getBase64Texture(),
                 MochilaType.GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                     Utils.alternativeColors("&7Uma mochila grande, pode ser um pouco útil"),
@@ -85,7 +85,7 @@ public class MochilasInventory extends InventoryGui {
 
         super.setItem(23, Utils.createNamedPlayerHead(
                 MochilaType.EXTRA_GRANDE.getItem().getType(),
-                MochilaType.EXTRA_GRANDE.getID(),
+                MochilaType.EXTRA_GRANDE.getBase64Texture(),
                 MochilaType.EXTRA_GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                 Utils.alternativeColors("&7Uma mochila extra grande, pode ser um pouco útil"),
@@ -104,7 +104,7 @@ public class MochilasInventory extends InventoryGui {
 
         super.setItem(15, Utils.createNamedPlayerHead(
                 MochilaType.GIGANTE.getItem().getType(),
-                MochilaType.GIGANTE.getID(),
+                MochilaType.GIGANTE.getBase64Texture(),
                 MochilaType.GIGANTE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                 Utils.alternativeColors("&7Uma mochila gigante, pode ser um pouco útil"),
@@ -124,7 +124,6 @@ public class MochilasInventory extends InventoryGui {
 
     private void openConfirmInventory(Player player, MochilaType mochila) {
         super.close(player);
-        ConfirmInventory confirmInventory = new ConfirmInventory(mochila);
-        confirmInventory.open(player);
+        new ConfirmInventory(mochila).open(player);
     }
 }

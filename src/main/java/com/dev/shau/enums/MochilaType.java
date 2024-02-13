@@ -18,21 +18,23 @@ import java.util.Arrays;
 
 @Getter
 public enum MochilaType {
-    PEQUENA("&a", "Mochila Pequena", 52081),
-    MEDIA("&b", "Mochila Média", 46547),
-    GRANDE("&c", "Mochila Grande", 30768),
-    EXTRA_GRANDE("&9", "Mochila Extra-grande", 40968),
-    GIGANTE("&6", "Mochila Gigante", 69235);
+    PEQUENA("&a", "Mochila Pequena", 30000, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTE2NWVlMTNhNjA2ZTFiNDQ2OTVhZjQ2YzM5YjUyY2U2NjY1N2E0YzRhNjIzZDBiMjgyYTdiOGNlMDUwOTQwNCJ9fX0="),
+    MEDIA("&b", "Mochila Média", 40000, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjMwOGJmNWNjM2U5ZGVjYWYwNzcwYzNmZGFkMWUwNDIxMjFjZjM5Y2MyNTA1YmJiODY2ZTE4YzZkMjNjY2QwYyJ9fX0="),
+    GRANDE("&c", "Mochila Grande", 50000, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGRjYzZlYjQwZjNiYWRhNDFlNDMzOTg4OGQ2ZDIwNzQzNzU5OGJkYmQxNzVjMmU3MzExOTFkNWE5YTQyZDNjOCJ9fX0="),
+    EXTRA_GRANDE("&9", "Mochila Extra-grande", 60000, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzNjMGJmYTg3NWFiOGI4M2Q4ZDk1MTk3NzRjNmM3YzQ1YWQ5YTg4NDNmNjhhNGE1YzAwMDM3NDMyNjBlMmVjNSJ9fX0="),
+    GIGANTE("&6", "Mochila Gigante", 70000, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmI4MGE4NzFlOTkzOWViMWRlM2I0MGM5YzFmMDVjY2NhODlkYzk2NTQ3YzZlNjZjNjVhNTFiYWU3YTM1NWY4OSJ9fX0=");
 
     private final String color;
     private final String displayName;
-    private final int ID;
+    private final int price;
+    private final String base64Texture;
     private final ItemStack item;
 
-    MochilaType(String color, String displayName, int ID) {
+    MochilaType(String color, String displayName, int price, String base64Texture) {
         this.color = color;
         this.displayName = Utils.alternativeColors(color + displayName);
-        this.ID = ID;
+        this.price = price;
+        this.base64Texture = base64Texture;
         this.item = this.buildItemStack();
     }
 
@@ -43,7 +45,8 @@ public enum MochilaType {
 
         skullMeta.setDisplayName(this.displayName);
         skullMeta.setLore(Arrays.asList(
-            ChatColor.GRAY + "Você ainda pode guardar itens na mochila!"
+            ChatColor.GRAY + "Você ainda pode guardar itens na mochila!",
+            ChatColor.GRAY + "Espaço: \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 (0%)"
         ));
         skullMeta.getPersistentDataContainer().set(
                 new NamespacedKey(Backpacks.getInstance(), "mochila"),
@@ -51,7 +54,8 @@ public enum MochilaType {
                 this.name()
         );
 
-        skullMeta.setOwner(String.valueOf(this.ID));
+        Utils.putBase64Texture(skullMeta, this.base64Texture);
+
         itemStack.setItemMeta(skullMeta);
 
         return itemStack;
