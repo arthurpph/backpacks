@@ -49,6 +49,14 @@ public class MochilasInventory extends InventoryGui {
                     MochilaType.MEDIA.getID(),
                     MochilaType.MEDIA.getDisplayName(),
                     new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
+                    Utils.alternativeColors("&7Uma mochila média, pode ser um pouco útil"),
+                    Utils.alternativeColors("&7Caso você queira partir em aventuras menores"),
+                    Utils.alternativeColors("&7E possa ter segurança para guardar poucos items"),
+                    "",
+                    Utils.alternativeColors("&7Tamanho: &e&lMEDIO (24x24)"),
+                    Utils.alternativeColors("&7Valor de compra: &a&l40.000 COINS"),
+                    "",
+                    Utils.alternativeColors("&eClique para comprar"),
                     ""
                 ),
                 event -> {
@@ -61,6 +69,14 @@ public class MochilasInventory extends InventoryGui {
                 MochilaType.GRANDE.getID(),
                 MochilaType.GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
+                    Utils.alternativeColors("&7Uma mochila grande, pode ser um pouco útil"),
+                    Utils.alternativeColors("&7Caso você queira partir em aventuras menores"),
+                    Utils.alternativeColors("&7E possa ter segurança para guardar poucos items"),
+                    "",
+                    Utils.alternativeColors("&7Tamanho: &e&lGRANDE (24x24)"),
+                    Utils.alternativeColors("&7Valor de compra: &a&l50.000 COINS"),
+                    "",
+                    Utils.alternativeColors("&eClique para comprar"),
                 ""),
                 event -> {
                     this.openConfirmInventory(player, MochilaType.GRANDE);
@@ -72,6 +88,14 @@ public class MochilasInventory extends InventoryGui {
                 MochilaType.EXTRA_GRANDE.getID(),
                 MochilaType.EXTRA_GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
+                Utils.alternativeColors("&7Uma mochila extra grande, pode ser um pouco útil"),
+                Utils.alternativeColors("&7Caso você queira partir em aventuras menores"),
+                Utils.alternativeColors("&7E possa ter segurança para guardar poucos items"),
+                "",
+                Utils.alternativeColors("&7Tamanho: &e&lEXTRA GRANDE (24x24)"),
+                Utils.alternativeColors("&7Valor de compra: &a&l60.000 COINS"),
+                "",
+                Utils.alternativeColors("&eClique para comprar"),
                 ""),
                 event -> {
                     this.openConfirmInventory(player, MochilaType.EXTRA_GRANDE);
@@ -83,6 +107,14 @@ public class MochilasInventory extends InventoryGui {
                 MochilaType.GIGANTE.getID(),
                 MochilaType.GIGANTE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
+                Utils.alternativeColors("&7Uma mochila gigante, pode ser um pouco útil"),
+                Utils.alternativeColors("&7Caso você queira partir em aventuras menores"),
+                Utils.alternativeColors("&7E possa ter segurança para guardar poucos items"),
+                "",
+                Utils.alternativeColors("&7Tamanho: &e&lGIGANTE (24x24)"),
+                Utils.alternativeColors("&7Valor de compra: &a&l70.000 COINS"),
+                "",
+                Utils.alternativeColors("&eClique para comprar"),
                 ""),
                 event -> {
                     this.openConfirmInventory(player, MochilaType.GIGANTE);
