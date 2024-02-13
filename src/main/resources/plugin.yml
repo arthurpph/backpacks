@@ -1,0 +1,8 @@
+name: backpacks
+version: '${version}'
+main: com.dev.shau.Backpacks
+api-version: '1.19'
+commands:
+  mochilas:
+    description: "Mostra as mochilas disponíveis para venda"
+    usage: "/mochilas"
