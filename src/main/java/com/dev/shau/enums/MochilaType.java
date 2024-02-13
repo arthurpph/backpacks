@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 
 @Getter
-public enum Mochila {
+public enum MochilaType {
     PEQUENA("&a", "Mochila Pequena", 52081),
     MEDIA("&b", "Mochila Média", 46547),
     GRANDE("&c", "Mochila Grande", 30768),
@@ -29,7 +29,7 @@ public enum Mochila {
     private final int ID;
     private final ItemStack item;
 
-    Mochila(String color, String displayName, int ID) {
+    MochilaType(String color, String displayName, int ID) {
         this.color = color;
         this.displayName = Utils.alternativeColors(color + displayName);
         this.ID = ID;

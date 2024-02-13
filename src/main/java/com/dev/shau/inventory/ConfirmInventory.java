@@ -1,17 +1,12 @@
 package com.dev.shau.inventory;
 
-import com.dev.shau.enums.Mochila;
+import com.dev.shau.enums.MochilaType;
 import com.dev.shau.utils.Utils;
 import com.hakan.core.ui.inventory.InventoryGui;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.profile.PlayerProfile;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -21,9 +16,9 @@ import java.util.HashSet;
  */
 
 public class ConfirmInventory extends InventoryGui {
-    private final Mochila mochila;
+    private final MochilaType mochila;
 
-    public ConfirmInventory(Mochila mochila) {
+    public ConfirmInventory(MochilaType mochila) {
         super("confirm", "Confirmar compra", 0, InventoryType.HOPPER, new HashSet<>());
 
         super.addOption(Option.CLOSABLE);

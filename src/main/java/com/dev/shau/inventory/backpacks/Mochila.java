@@ -1,39 +1,31 @@
 package com.dev.shau.inventory.backpacks;
 
 import com.dev.shau.Backpacks;
-import com.dev.shau.utils.Utils;
 import com.hakan.core.ui.inventory.InventoryGui;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Shau
  */
 
-public class MochilaPequena extends InventoryGui implements Listener {
-    private final ItemStack itemStack;
-    private final ItemMeta itemMeta;
-    private final PersistentDataContainer persistentDataContainer;
+public class Mochila extends InventoryGui {
+    protected final ItemStack itemStack;
+    protected final ItemMeta itemMeta;
+    protected final PersistentDataContainer persistentDataContainer;
 
-    public MochilaPequena(ItemStack itemStack) {
-        super("mochila_pequena", "Mochila Pequena", 2, InventoryType.CHEST, new HashSet<>());
+    public Mochila(ItemStack itemStack, String id, String title, int size, InventoryType type) {
+        super(id, title, size, type, new HashSet<>());
         super.addOption(Option.CLOSABLE);
 
         this.itemStack = itemStack;

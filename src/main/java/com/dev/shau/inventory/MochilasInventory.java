@@ -1,6 +1,6 @@
 package com.dev.shau.inventory;
 
-import com.dev.shau.enums.Mochila;
+import com.dev.shau.enums.MochilaType;
 import com.dev.shau.utils.Utils;
 import com.hakan.core.ui.inventory.InventoryGui;
 import org.bukkit.entity.Player;
@@ -26,9 +26,9 @@ public class MochilasInventory extends InventoryGui {
     @Override
     public void onOpen(@Nonnull Player player) {
         super.setItem(11, Utils.createNamedPlayerHead(
-                    Mochila.PEQUENA.getItem().getType(),
-                    Mochila.PEQUENA.getID(),
-                    Mochila.PEQUENA.getDisplayName(),
+                    MochilaType.PEQUENA.getItem().getType(),
+                    MochilaType.PEQUENA.getID(),
+                    MochilaType.PEQUENA.getDisplayName(),
                     new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                     Utils.alternativeColors("&7Uma mochila pequena, pode ser um pouco útil"),
                     Utils.alternativeColors("&7Caso você queira partir em aventuras menores"),
@@ -40,57 +40,57 @@ public class MochilasInventory extends InventoryGui {
                     Utils.alternativeColors("&eClique para comprar")
                 ),
                 event -> {
-                    this.openConfirmInventory(player, Mochila.PEQUENA);
+                    this.openConfirmInventory(player, MochilaType.PEQUENA);
                 }
         );
 
         super.setItem(21, Utils.createNamedPlayerHead(
-                    Mochila.MEDIA.getItem().getType(),
-                    Mochila.MEDIA.getID(),
-                    Mochila.MEDIA.getDisplayName(),
+                    MochilaType.MEDIA.getItem().getType(),
+                    MochilaType.MEDIA.getID(),
+                    MochilaType.MEDIA.getDisplayName(),
                     new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                     ""
                 ),
                 event -> {
-                    this.openConfirmInventory(player, Mochila.MEDIA);
+                    this.openConfirmInventory(player, MochilaType.MEDIA);
                 }
         );
 
         super.setItem(13, Utils.createNamedPlayerHead(
-                Mochila.GRANDE.getItem().getType(),
-                Mochila.GRANDE.getID(),
-                Mochila.GRANDE.getDisplayName(),
+                MochilaType.GRANDE.getItem().getType(),
+                MochilaType.GRANDE.getID(),
+                MochilaType.GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                 ""),
                 event -> {
-                    this.openConfirmInventory(player, Mochila.GRANDE);
+                    this.openConfirmInventory(player, MochilaType.GRANDE);
                 }
         );
 
         super.setItem(23, Utils.createNamedPlayerHead(
-                Mochila.EXTRA_GRANDE.getItem().getType(),
-                Mochila.EXTRA_GRANDE.getID(),
-                Mochila.EXTRA_GRANDE.getDisplayName(),
+                MochilaType.EXTRA_GRANDE.getItem().getType(),
+                MochilaType.EXTRA_GRANDE.getID(),
+                MochilaType.EXTRA_GRANDE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                 ""),
                 event -> {
-                    this.openConfirmInventory(player, Mochila.EXTRA_GRANDE);
+                    this.openConfirmInventory(player, MochilaType.EXTRA_GRANDE);
                 }
         );
 
         super.setItem(15, Utils.createNamedPlayerHead(
-                Mochila.GIGANTE.getItem().getType(),
-                Mochila.GIGANTE.getID(),
-                Mochila.GIGANTE.getDisplayName(),
+                MochilaType.GIGANTE.getItem().getType(),
+                MochilaType.GIGANTE.getID(),
+                MochilaType.GIGANTE.getDisplayName(),
                 new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES},
                 ""),
                 event -> {
-                    this.openConfirmInventory(player, Mochila.GIGANTE);
+                    this.openConfirmInventory(player, MochilaType.GIGANTE);
                 }
         );
     }
 
-    private void openConfirmInventory(Player player, Mochila mochila) {
+    private void openConfirmInventory(Player player, MochilaType mochila) {
         super.close(player);
         ConfirmInventory confirmInventory = new ConfirmInventory(mochila);
         confirmInventory.open(player);

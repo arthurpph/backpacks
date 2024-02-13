@@ -1,18 +1,15 @@
 package com.dev.shau;
 
 import com.dev.shau.commands.MochilasCmd;
-import com.dev.shau.inventory.backpacks.MochilaPequena;
-import com.dev.shau.utils.Utils;
+import com.dev.shau.inventory.backpacks.impl.*;
 import com.hakan.core.HCore;
-import com.hakan.core.ui.inventory.InventoryGui;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -58,8 +55,27 @@ public class Backpacks extends JavaPlugin {
                         if(persistentDataContainer.has(new NamespacedKey(this, "mochila"), PersistentDataType.STRING)) {
                             String mochila = persistentDataContainer.get(new NamespacedKey(this, "mochila"), PersistentDataType.STRING);
 
-                            MochilaPequena mochilaPequena = new MochilaPequena(e.getItem());
-                            mochilaPequena.open(e.getPlayer());
+                            if(mochila != null) {
+                                ItemStack playerItem = e.getItem();
+                                Player player = e.getPlayer();
+                                switch (mochila) {
+                                    case "PEQUENA":
+                                        new MochilaPequena(playerItem).open(player);
+                                        break;
+                                    case "MEDIA":
+                                        new MochilaMedia(playerItem).open(player);
+                                        break;
+                                    case "GRANDE":
+                                        new MochilaGrande(playerItem).open(player);
+                                        break;
+                                    case "EXTRA_GRANDE":
+                                        new MochilaExtraGrande(playerItem).open(player);
+                                        break;
+                                    case "GIGANTE":
+                                        new MochilaGigante(playerItem).open(player);
+                                        break;
+                                }
+                            }
                         }
                     }
                 });
