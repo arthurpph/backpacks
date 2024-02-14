@@ -7,16 +7,22 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.naming.Name;
 
 /**
  * @author Shau
@@ -103,6 +109,84 @@ public class Backpacks extends JavaPlugin {
                                     break;
                             }
                         }
+                    }
+                });
+
+        HCore.registerEvent(InventoryClickEvent.class)
+                .consume(e -> {
+                    ItemStack slotItem = e.getCurrentItem();
+                    ItemStack cursorItem = e.getCursor();
+
+                    if(cursorItem.getType() != Material.AIR && slotItem != null && slotItem.hasItemMeta() && slotItem.getItemMeta().getPersistentDataContainer().has(
+                            new NamespacedKey(this, "mochila"),
+                            PersistentDataType.STRING
+                    )) {
+                        e.setCancelled(true);
+
+                        if(cursorItem.getType() == Material.PLAYER_HEAD) { return; }
+
+                        ItemMeta slotMeta = slotItem.getItemMeta();
+                        PersistentDataContainer persistentDataContainer = slotMeta.getPersistentDataContainer();
+                        String itemType = cursorItem.serialize().get("type").toString();
+                        Inventory topInventory = e.getView().getTopInventory();
+
+                        if(!(topInventory instanceof CraftingInventory)) {
+                            topInventory.addItem(cursorItem);
+                            e.setCursor(null);
+                            return;
+                        }
+
+                        if(!persistentDataContainer.has(
+                                new NamespacedKey(this, "items" + 0),
+                                PersistentDataType.STRING
+                        )) {
+                            persistentDataContainer.set(
+                                    new NamespacedKey(this, "items" + 0),
+                                    PersistentDataType.STRING,
+                                    itemType + "x" + slotItem.getAmount()
+                            );
+
+                            slotItem.setItemMeta(slotMeta);
+
+                            e.setCursor(null);
+                            return;
+                        }
+
+                        for(NamespacedKey containerKey : persistentDataContainer.getKeys()) {
+                            String key = containerKey.getKey();
+
+                            if(key.startsWith("items")) {
+                                int slot = Integer.parseInt(key.split("items")[1]);
+                                int nextSlot = slot + 1;
+
+                                String content = persistentDataContainer.get(
+                                        new NamespacedKey(this, "items" + slot),
+                                        PersistentDataType.STRING
+                                );
+
+                                if(content.split("x")[0].equals(itemType)) {
+                                    persistentDataContainer.set(
+                                            new NamespacedKey(this, "items" + slot),
+                                            PersistentDataType.STRING,
+                                            itemType + "x" + Integer.parseInt(content.split("x")[1]) + cursorItem.getAmount()
+                                    );
+                                    break;
+                                } else if(!persistentDataContainer.has(
+                                        new NamespacedKey(this, "items" + nextSlot),
+                                        PersistentDataType.STRING
+                                )){
+                                    persistentDataContainer.set(
+                                            new NamespacedKey(this, "items" + nextSlot),
+                                            PersistentDataType.STRING,
+                                            cursorItem.serialize().get("type").toString() + "x" + cursorItem.getAmount()
+                                    );
+                                    break;
+                                }
+                            }
+                        }
+
+                        e.setCursor(null);
+                        slotItem.setItemMeta(slotMeta);
                     }
                 });
     }

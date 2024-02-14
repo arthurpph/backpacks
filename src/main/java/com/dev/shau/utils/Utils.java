@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -101,5 +102,40 @@ public class Utils {
         }
 
         return squareBlocks.toString();
+    }
+
+    public static void changeBackpackLore(ItemStack itemStack, ItemStack[] contents, Inventory inventory, MochilaType mochila) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        int itemsCounter = 0;
+
+        for (ItemStack item : contents) {
+            if (item != null) {
+                itemsCounter += 1;
+            }
+        }
+
+        int slotsEmpty = inventory.getSize() - itemsCounter;
+        double spaceLeft = ((double) slotsEmpty / inventory.getSize()) * 100;
+        int spaceRounded = (int) (Math.round(spaceLeft / 10.0) * 10);
+        int spaceFixed = spaceRounded == 0 && spaceLeft > 0 ? 10 : spaceRounded;
+
+        String squareBlocks = calculateSquareBlocks(mochila, spaceFixed);
+        String spaceLeftMessage = ChatColor.GRAY + "Espaço: " + squareBlocks + ChatColor.GRAY + " (" + (spaceFixed) + "%)";
+
+        if (spaceFixed > 0) {
+            itemMeta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Você ainda pode guardar itens na mochila!",
+                    spaceLeftMessage
+            ));
+        } else {
+            itemMeta.setLore(Arrays.asList(
+                    spaceLeftMessage,
+                    "",
+                    Utils.alternativeColors("&c&lATENÇÃO: &cSua mochila está totalmente cheia!")
+            ));
+        }
+
+        itemStack.setItemMeta(itemMeta);
     }
 }
