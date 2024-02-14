@@ -55,10 +55,10 @@ public class ConfirmInventory extends InventoryGui {
 
                     super.close(player);
 
-                    if(economy.getBalance(player) < this.mochila.getPrice()) {
+                    /*if(economy.getBalance(player) < this.mochila.getPrice()) {
                         player.sendMessage(Utils.alternativeColors("&cVocê não tem dinheiro suficiente para comprar isso!"));
                         return;
-                    }
+                    }*/
 
                     economy.withdrawPlayer(player, this.mochila.getPrice());
                     player.getInventory().addItem(this.mochila.getItem());

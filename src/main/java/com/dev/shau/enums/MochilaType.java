@@ -46,7 +46,7 @@ public enum MochilaType {
         skullMeta.setDisplayName(this.displayName);
         skullMeta.setLore(Arrays.asList(
             ChatColor.GRAY + "Você ainda pode guardar itens na mochila!",
-            ChatColor.GRAY + "Espaço: \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 (0%)"
+            ChatColor.GRAY + "Espaço: " + Utils.alternativeColors(this.getColor()) + "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 " + ChatColor.GRAY + "(100%)"
         ));
         skullMeta.getPersistentDataContainer().set(
                 new NamespacedKey(Backpacks.getInstance(), "mochila"),

@@ -18,6 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * @author Shau
@@ -46,12 +47,17 @@ public class Mochila extends InventoryGui {
                     new NamespacedKey(Backpacks.getInstance(), "items" + i),
                     PersistentDataType.STRING
             )) {
-                Material material = Material.valueOf(this.persistentDataContainer.get(
+                String[] item = this.persistentDataContainer.get(
                         new NamespacedKey(Backpacks.getInstance(), "items" + i),
                         PersistentDataType.STRING
-                ));
+                ).split("x");
 
-                super.setItem(i, new ItemStack(material));
+                String type = item[0];
+                String amount = item[1];
+
+                Material material = Material.valueOf(type);
+
+                super.setItem(i, new ItemStack(material, Integer.parseInt(amount)));
             }
         }
     }
@@ -61,18 +67,26 @@ public class Mochila extends InventoryGui {
         ItemStack[] currentItems = this.toInventory().getStorageContents();
 
         int itemsCounter = 0;
-
         int counter = 0;
+
         for(ItemStack item : currentItems) {
             String key = "items" + counter;
 
             if(item != null) {
                 itemsCounter += 1;
 
+                String itemType = item.serialize().get("type").toString();
+
+                if(itemType.equals("PLAYER_HEAD")) {
+                    player.getInventory().addItem(item);
+                    player.sendMessage(Utils.alternativeColors("&c&lVocê não pode guardar uma mochila dentro de outra!"));
+                    continue;
+                }
+
                 this.persistentDataContainer.set(
                         new NamespacedKey(Backpacks.getInstance(), key),
                         PersistentDataType.STRING,
-                        item.serialize().get("type").toString()
+                        itemType + "x" + item.getAmount()
                 );
             } else if(this.persistentDataContainer.has(
                     new NamespacedKey(Backpacks.getInstance(), key),
@@ -86,13 +100,13 @@ public class Mochila extends InventoryGui {
 
         int slotsEmpty = this.inventory.getSize() - itemsCounter;
         double spaceLeft = ((double) slotsEmpty / this.inventory.getSize()) * 100;
-        int spaceRounded = spaceLeft > 0 ? (int) (Math.round(spaceLeft / (double) 10 + 0.5) * 10) : 0;
-        int spaceFixed = 100 - spaceRounded;
+        int spaceRounded = (int) (Math.round(spaceLeft / 10.0) * 10);
+        int spaceFixed = (int) (spaceRounded == 0 && spaceLeft > 0 ? 10 : spaceRounded);
 
-        String squareBlocks = Utils.calculateSquareBlocks(this.mochila, 100 - spaceRounded);
+        String squareBlocks = Utils.calculateSquareBlocks(this.mochila, spaceFixed);
+        String spaceLeftMessage = ChatColor.GRAY + "Espaço: " + squareBlocks + ChatColor.GRAY + " (" + (spaceFixed) + "%)";
 
-        String spaceLeftMessage = ChatColor.GRAY + "Espaço: " + squareBlocks + " (" + (Math.max(spaceFixed, 0)) + "%)";
-        if(spaceFixed < 100) {
+        if(spaceFixed > 0) {
             this.itemMeta.setLore(Arrays.asList(
                     ChatColor.GRAY + "Você ainda pode guardar itens na mochila!",
                     spaceLeftMessage
